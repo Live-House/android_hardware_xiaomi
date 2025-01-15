@@ -1,18 +1,17 @@
 cc_defaults {
     name: "android.hardware.health-service.xiaomi-defaults",
+    defaults: [
+        "libhealth_aidl_impl_user",
+    ],
     relative_install_path: "hw",
     vintf_fragments: ["android.hardware.health-service.xiaomi.xml"],
     vendor: true,
     recovery_available: true,
 
-    defaults: [
-        "libhealth_aidl_impl_user",
-    ],
-
     include_dirs: [
         "system/core/healthd",
         "system/core/healthd/include",
-        "system/core/healthd/include_charger"
+        "system/core/healthd/include_charger",
     ],
 
     static_libs: [
@@ -31,18 +30,24 @@ cc_defaults {
 
 cc_binary {
     name: "android.hardware.health-service.xiaomi",
+    defaults: ["android.hardware.health-service.xiaomi-defaults"],
     recovery: false,
     vendor: true,
-    defaults: ["android.hardware.health-service.xiaomi-defaults"],
     init_rc: ["android.hardware.health-service.xiaomi.rc"],
-    overrides: ["charger","android.hardware.health-service.qti"],
+    overrides: [
+        "charger",
+        "android.hardware.health-service.qti",
+    ],
 }
 
 cc_binary {
     name: "android.hardware.health-service.xiaomi_recovery",
+    defaults: ["android.hardware.health-service.xiaomi-defaults"],
     vendor: false,
     recovery: true,
-    defaults: ["android.hardware.health-service.xiaomi-defaults"],
     init_rc: ["android.hardware.health-service.xiaomi_recovery.rc"],
-    overrides: ["charger.recovery", "android.hardware.health-service.qti_recovery"],
+    overrides: [
+        "charger.recovery",
+        "android.hardware.health-service.qti_recovery",
+    ],
 }
